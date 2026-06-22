@@ -85,6 +85,15 @@ export function LoginForm() {
             )}
           </div>
 
+          <div className="flex justify-end">
+            <a
+              href="/forgot-password"
+              className="text-sm text-primary underline"
+            >
+              Esqueci minha senha
+            </a>
+          </div>
+
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? "Entrando..." : "Entrar"}
           </Button>

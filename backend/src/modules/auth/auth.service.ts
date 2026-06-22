@@ -8,8 +8,11 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'node:crypto';
 import { UsersRepository } from '../users/users.repository.js';
+import { MailService } from '../mail/mail.service.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { LoginDto } from './dto/login.dto.js';
+import { ForgotPasswordDto } from './dto/forgot-password.dto.js';
+import { ResetPasswordDto } from './dto/reset-password.dto.js';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +20,7 @@ export class AuthService {
     private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly mailService: MailService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -75,6 +79,43 @@ export class AuthService {
     );
 
     return tokens;
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const user = await this.usersRepository.findByEmail(dto.email);
+    if (!user) {
+      return { message: 'Se o e-mail existir, enviaremos um link de recuperação' };
+    }
+
+    await this.usersRepository.deleteUserPasswordResetTokens(user.id);
+
+    const token = crypto.randomUUID();
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 1);
+
+    await this.usersRepository.createPasswordResetToken({
+      userId: user.id,
+      token,
+      expiresAt,
+    });
+
+    await this.mailService.sendPasswordReset(user.email, token);
+
+    return { message: 'Se o e-mail existir, enviaremos um link de recuperação' };
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const stored = await this.usersRepository.findPasswordResetToken(dto.token);
+    if (!stored || stored.expiresAt < new Date()) {
+      throw new UnauthorizedException('Token inválido ou expirado');
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+    await this.usersRepository.updatePassword(stored.userId, hashedPassword);
+    await this.usersRepository.deleteUserPasswordResetTokens(stored.userId);
+    await this.usersRepository.deleteUserRefreshTokens(stored.userId);
+
+    return { message: 'Senha alterada com sucesso' };
   }
 
   private async generateTokens(userId: string, email: string) {

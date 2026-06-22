@@ -39,4 +39,34 @@ export class UsersRepository {
   async deleteUserRefreshTokens(userId: string) {
     return this.prisma.refreshToken.deleteMany({ where: { userId } });
   }
+
+  async updatePassword(userId: string, password: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { password },
+    });
+  }
+
+  async createPasswordResetToken(data: {
+    userId: string;
+    token: string;
+    expiresAt: Date;
+  }) {
+    return this.prisma.passwordResetToken.create({ data });
+  }
+
+  async findPasswordResetToken(token: string) {
+    return this.prisma.passwordResetToken.findUnique({
+      where: { token },
+      include: { user: true },
+    });
+  }
+
+  async deletePasswordResetToken(token: string) {
+    return this.prisma.passwordResetToken.delete({ where: { token } });
+  }
+
+  async deleteUserPasswordResetTokens(userId: string) {
+    return this.prisma.passwordResetToken.deleteMany({ where: { userId } });
+  }
 }

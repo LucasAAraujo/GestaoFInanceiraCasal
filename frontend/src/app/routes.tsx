@@ -4,6 +4,8 @@ import { AppLayout } from "#shared/components/layout/AppLayout.tsx";
 import { AuthGuard } from "#shared/components/guards/AuthGuard.tsx";
 import { LoginPage } from "#features/auth/pages/LoginPage.tsx";
 import { RegisterPage } from "#features/auth/pages/RegisterPage.tsx";
+import { ForgotPasswordPage } from "#features/auth/pages/ForgotPasswordPage.tsx";
+import { ResetPasswordPage } from "#features/auth/pages/ResetPasswordPage.tsx";
 
 function DashboardPage() {
   return <h1>Dashboard</h1>;
@@ -15,6 +17,8 @@ export function AppRoutes() {
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       </Route>
 
       <Route element={<AuthGuard />}>
