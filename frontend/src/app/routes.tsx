@@ -1,13 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthLayout } from "#shared/components/layout/AuthLayout.tsx";
 import { AppLayout } from "#shared/components/layout/AppLayout.tsx";
+import { RegisterPage } from "#features/auth/pages/RegisterPage.tsx";
 
 function LoginPage() {
   return <h1>Login</h1>;
-}
-
-function RegisterPage() {
-  return <h1>Registro</h1>;
 }
 
 function DashboardPage() {
