@@ -1,8 +1,5 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
-});
+import { api } from "#shared/lib/api.ts";
+import type { AuthUser } from "#shared/stores/authStore.ts";
 
 export interface RegisterPayload {
   name: string;
@@ -10,16 +7,23 @@ export interface RegisterPayload {
   password: string;
 }
 
-export interface RegisterResponse {
-  id: string;
-  name: string;
+export interface LoginPayload {
   email: string;
-  avatarUrl: string | null;
-  createdAt: string;
-  updatedAt: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  user: AuthUser;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export async function register(data: RegisterPayload) {
-  const response = await api.post<RegisterResponse>("/auth/register", data);
+  const response = await api.post("/auth/register", data);
+  return response.data;
+}
+
+export async function login(data: LoginPayload) {
+  const response = await api.post<LoginResponse>("/auth/login", data);
   return response.data;
 }
