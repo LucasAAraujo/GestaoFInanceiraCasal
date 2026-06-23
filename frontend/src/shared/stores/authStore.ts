@@ -11,16 +11,19 @@ interface AuthState {
   user: AuthUser | null;
   token: string | null;
   refreshToken: string | null;
+  tenantId: string | null;
   isAuthenticated: boolean;
   login: (user: AuthUser, token: string, refreshToken: string) => void;
   logout: () => void;
   setToken: (token: string) => void;
+  setTenantId: (tenantId: string) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: JSON.parse(localStorage.getItem("user") || "null"),
   token: localStorage.getItem("token"),
   refreshToken: localStorage.getItem("refreshToken"),
+  tenantId: localStorage.getItem("tenantId"),
   isAuthenticated: !!localStorage.getItem("token"),
 
   login: (user, token, refreshToken) => {
@@ -34,11 +37,17 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
-    set({ user: null, token: null, refreshToken: null, isAuthenticated: false });
+    localStorage.removeItem("tenantId");
+    set({ user: null, token: null, refreshToken: null, tenantId: null, isAuthenticated: false });
   },
 
   setToken: (token) => {
     localStorage.setItem("token", token);
     set({ token });
+  },
+
+  setTenantId: (tenantId) => {
+    localStorage.setItem("tenantId", tenantId);
+    set({ tenantId });
   },
 }));
