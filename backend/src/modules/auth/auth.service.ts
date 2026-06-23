@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'node:crypto';
 import { UsersRepository } from '../users/users.repository.js';
+import { TenantRepository } from '../tenant/tenant.repository.js';
 import { MailService } from '../mail/mail.service.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { LoginDto } from './dto/login.dto.js';
@@ -18,6 +19,7 @@ import { ResetPasswordDto } from './dto/reset-password.dto.js';
 export class AuthService {
   constructor(
     private readonly usersRepository: UsersRepository,
+    private readonly tenantRepository: TenantRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly mailService: MailService,
@@ -119,7 +121,9 @@ export class AuthService {
   }
 
   private async generateTokens(userId: string, email: string) {
-    const payload = { sub: userId, email };
+    const membership =
+      await this.tenantRepository.findMemberByUserId(userId);
+    const payload = { sub: userId, email, tenantId: membership?.tenantId };
 
     const accessToken = this.jwtService.sign(payload);
 
