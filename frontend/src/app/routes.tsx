@@ -8,6 +8,7 @@ import { ForgotPasswordPage } from "#features/auth/pages/ForgotPasswordPage.tsx"
 import { ResetPasswordPage } from "#features/auth/pages/ResetPasswordPage.tsx";
 import { CreateWorkspacePage } from "#features/tenant/pages/CreateWorkspacePage.tsx";
 import { AcceptInvitePage } from "#features/tenant/pages/AcceptInvitePage.tsx";
+import { CategoriesPage } from "#features/categories/pages/CategoriesPage.tsx";
 
 function DashboardPage() {
   return <h1>Dashboard</h1>;
@@ -28,6 +29,7 @@ export function AppRoutes() {
         <Route path="/invite/:token" element={<AcceptInvitePage />} />
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
         </Route>
       </Route>
 
