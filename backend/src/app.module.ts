@@ -8,6 +8,7 @@ import { CategoriesModule } from './modules/categories/categories.module.js';
 import { AccountsModule } from './modules/accounts/accounts.module.js';
 import { TransactionsModule } from './modules/transactions/transactions.module.js';
 import { RecurringModule } from './modules/recurring/recurring.module.js';
+import { DashboardModule } from './modules/dashboard/dashboard.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -22,6 +23,7 @@ import { AppService } from './app.service.js';
     AccountsModule,
     TransactionsModule,
     RecurringModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
