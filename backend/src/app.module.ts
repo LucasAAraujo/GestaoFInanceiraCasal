@@ -7,6 +7,7 @@ import { TenantModule } from './modules/tenant/tenant.module.js';
 import { CategoriesModule } from './modules/categories/categories.module.js';
 import { AccountsModule } from './modules/accounts/accounts.module.js';
 import { TransactionsModule } from './modules/transactions/transactions.module.js';
+import { RecurringModule } from './modules/recurring/recurring.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -20,6 +21,7 @@ import { AppService } from './app.service.js';
     CategoriesModule,
     AccountsModule,
     TransactionsModule,
+    RecurringModule,
   ],
   controllers: [AppController],
   providers: [AppService],
