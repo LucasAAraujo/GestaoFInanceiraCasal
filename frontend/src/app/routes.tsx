@@ -9,6 +9,7 @@ import { ResetPasswordPage } from "#features/auth/pages/ResetPasswordPage.tsx";
 import { CreateWorkspacePage } from "#features/tenant/pages/CreateWorkspacePage.tsx";
 import { AcceptInvitePage } from "#features/tenant/pages/AcceptInvitePage.tsx";
 import { CategoriesPage } from "#features/categories/pages/CategoriesPage.tsx";
+import { AccountsPage } from "#features/accounts/pages/AccountsPage.tsx";
 
 function DashboardPage() {
   return <h1>Dashboard</h1>;
@@ -30,6 +31,7 @@ export function AppRoutes() {
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/accounts" element={<AccountsPage />} />
         </Route>
       </Route>
 
