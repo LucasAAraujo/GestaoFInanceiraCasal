@@ -1,0 +1,15 @@
+export const DEFAULT_CATEGORIES = [
+  { name: 'Moradia', type: 'expense', color: '#EF4444', icon: 'home' },
+  { name: 'Alimentação', type: 'expense', color: '#F97316', icon: 'utensils' },
+  { name: 'Transporte', type: 'expense', color: '#3B82F6', icon: 'car' },
+  { name: 'Saúde', type: 'expense', color: '#10B981', icon: 'heart-pulse' },
+  { name: 'Lazer', type: 'expense', color: '#8B5CF6', icon: 'gamepad-2' },
+  { name: 'Assinaturas', type: 'expense', color: '#EC4899', icon: 'tv' },
+  { name: 'Pets', type: 'expense', color: '#F59E0B', icon: 'paw-print' },
+  { name: 'Educação', type: 'expense', color: '#06B6D4', icon: 'graduation-cap' },
+  { name: 'Salário', type: 'income', color: '#22C55E', icon: 'wallet' },
+  { name: 'Freelance', type: 'income', color: '#14B8A6', icon: 'laptop' },
+  { name: 'Reembolso', type: 'income', color: '#6366F1', icon: 'receipt' },
+  { name: 'Rendimentos', type: 'income', color: '#0EA5E9', icon: 'trending-up' },
+  { name: 'Outros', type: 'income', color: '#6B7280', icon: 'circle-plus' },
+];

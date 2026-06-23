@@ -7,15 +7,18 @@ import {
 import * as crypto from 'node:crypto';
 import { TenantRepository } from './tenant.repository.js';
 import { UsersRepository } from '../users/users.repository.js';
+import { CategoriesRepository } from '../categories/categories.repository.js';
 import { MailService } from '../mail/mail.service.js';
 import { CreateTenantDto } from './dto/create-tenant.dto.js';
 import { InviteMemberDto } from './dto/invite-member.dto.js';
+import { DEFAULT_CATEGORIES } from '../../common/constants/default-categories.js';
 
 @Injectable()
 export class TenantService {
   constructor(
     private readonly tenantRepository: TenantRepository,
     private readonly usersRepository: UsersRepository,
+    private readonly categoriesRepository: CategoriesRepository,
     private readonly mailService: MailService,
   ) {}
 
@@ -33,6 +36,8 @@ export class TenantService {
       role: 'admin',
       color: '#3B82F6',
     });
+
+    await this.categoriesRepository.createMany(tenant.id, DEFAULT_CATEGORIES);
 
     return this.tenantRepository.findById(tenant.id);
   }
