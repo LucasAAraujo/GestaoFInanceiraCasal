@@ -37,4 +37,24 @@ export class MailService {
       `,
     });
   }
+
+  async sendInvitation(to: string, token: string) {
+    const frontendUrl = this.configService.get(
+      'FRONTEND_URL',
+      'http://localhost:5173',
+    );
+    const inviteUrl = `${frontendUrl}/invite/${token}`;
+
+    await this.transporter.sendMail({
+      from: this.configService.get('MAIL_FROM', 'noreply@gestao-casal.com'),
+      to,
+      subject: 'Convite para Workspace Financeiro',
+      html: `
+        <h2>Você foi convidado(a)!</h2>
+        <p>Alguém convidou você para compartilhar um workspace financeiro.</p>
+        <p><a href="${inviteUrl}">Aceitar convite</a></p>
+        <p>Este convite expira em 7 dias.</p>
+      `,
+    });
+  }
 }

@@ -36,4 +36,41 @@ export class TenantRepository {
   async countMembers(tenantId: string) {
     return this.prisma.tenantMember.count({ where: { tenantId } });
   }
+
+  async getMembers(tenantId: string) {
+    return this.prisma.tenantMember.findMany({
+      where: { tenantId },
+      include: { user: { select: { id: true, name: true, email: true, avatarUrl: true } } },
+    });
+  }
+
+  async createInvitation(data: {
+    tenantId: string;
+    email: string;
+    token: string;
+    invitedBy: string;
+    expiresAt: Date;
+  }) {
+    return this.prisma.invitation.create({ data });
+  }
+
+  async findInvitationByToken(token: string) {
+    return this.prisma.invitation.findUnique({
+      where: { token },
+      include: { tenant: true },
+    });
+  }
+
+  async updateInvitationStatus(id: string, status: string) {
+    return this.prisma.invitation.update({
+      where: { id },
+      data: { status },
+    });
+  }
+
+  async findPendingInvitationByEmail(tenantId: string, email: string) {
+    return this.prisma.invitation.findFirst({
+      where: { tenantId, email, status: 'pending' },
+    });
+  }
 }
