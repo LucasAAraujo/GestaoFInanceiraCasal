@@ -11,6 +11,7 @@ import { AcceptInvitePage } from "#features/tenant/pages/AcceptInvitePage.tsx";
 import { CategoriesPage } from "#features/categories/pages/CategoriesPage.tsx";
 import { AccountsPage } from "#features/accounts/pages/AccountsPage.tsx";
 import { TransactionsPage } from "#features/transactions/pages/TransactionsPage.tsx";
+import { RecurringPage } from "#features/recurring/pages/RecurringPage.tsx";
 
 function DashboardPage() {
   return <h1>Dashboard</h1>;
@@ -34,6 +35,7 @@ export function AppRoutes() {
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/accounts" element={<AccountsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/recurring" element={<RecurringPage />} />
         </Route>
       </Route>
 
