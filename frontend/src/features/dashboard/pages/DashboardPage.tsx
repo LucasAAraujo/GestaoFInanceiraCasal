@@ -1,72 +1,70 @@
 import { useState } from "react";
-import { useDashboardSummary, useDashboardCharts, useUpcomingBills } from "../hooks/useDashboardData.ts";
+import { useDashboardSummary, useDashboardCharts } from "../hooks/useDashboardData.ts";
 import { SummaryCards } from "../components/SummaryCards.tsx";
 import { MonthSelector } from "../components/MonthSelector.tsx";
 import { RevenueExpenseChart } from "../components/RevenueExpenseChart.tsx";
-import { CategoryChart } from "../components/CategoryChart.tsx";
-import { PersonSplitChart } from "../components/PersonSplitChart.tsx";
 import { QuickActions } from "../components/QuickActions.tsx";
-import { UpcomingBills } from "../components/UpcomingBills.tsx";
-import { TransactionForm } from "#features/transactions/components/TransactionForm.tsx";
+import { DashboardSidebar } from "../components/DashboardSidebar.tsx";
+import { IncomeForm } from "#features/transactions/components/IncomeForm.tsx";
+import { ExpenseForm } from "#features/transactions/components/ExpenseForm.tsx";
+import { TransferForm } from "#features/transactions/components/TransferForm.tsx";
 
 export function DashboardPage() {
   const now = new Date();
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [year, setYear] = useState(now.getFullYear());
-  const [formOpen, setFormOpen] = useState(false);
-  const [defaultType, setDefaultType] = useState("expense");
+
+  const [incomeOpen, setIncomeOpen] = useState(false);
+  const [expenseOpen, setExpenseOpen] = useState(false);
+  const [transferOpen, setTransferOpen] = useState(false);
 
   const { data: summary, isLoading: loadingSummary } = useDashboardSummary(month, year);
   const { data: charts, isLoading: loadingCharts } = useDashboardCharts(month, year);
-  const { data: upcoming } = useUpcomingBills();
 
   function handleMonthChange(m: number, y: number) {
     setMonth(m);
     setYear(y);
   }
 
-  function handleAddTransaction(type: string) {
-    setDefaultType(type);
-    setFormOpen(true);
-  }
-
-  const isLoading = loadingSummary || loadingCharts;
-
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="space-y-5">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <QuickActions
+            onAddIncome={() => setIncomeOpen(true)}
+            onAddExpense={() => setExpenseOpen(true)}
+            onAddTransfer={() => setTransferOpen(true)}
+          />
+        </div>
         <MonthSelector month={month} year={year} onChange={handleMonthChange} />
       </div>
 
-      {isLoading ? (
-        <p className="text-muted-foreground">Carregando...</p>
-      ) : (
-        <>
-          {summary && <SummaryCards summary={summary} />}
+      {loadingSummary ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-20 bg-muted animate-pulse rounded-xl" />
+          ))}
+        </div>
+      ) : summary ? (
+        <SummaryCards summary={summary} />
+      ) : null}
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            <QuickActions onAddTransaction={handleAddTransaction} />
-            <div className="lg:col-span-2">
-              <UpcomingBills bills={upcoming ?? []} />
-            </div>
-          </div>
+      <div className="grid gap-5 lg:grid-cols-[1fr_340px]">
+        <div className="space-y-5">
+          {loadingCharts ? (
+            <div className="h-90 bg-muted animate-pulse rounded-xl" />
+          ) : charts ? (
+            <RevenueExpenseChart data={charts.monthlyTotals} />
+          ) : null}
+        </div>
 
-          {charts && (
-            <div className="grid gap-6 lg:grid-cols-2">
-              <RevenueExpenseChart data={charts.monthlyTotals} />
-              <CategoryChart data={charts.byCategory} />
-              <PersonSplitChart data={charts.byPerson} />
-            </div>
-          )}
-        </>
-      )}
+        <DashboardSidebar />
+      </div>
 
-      <TransactionForm
-        open={formOpen}
-        onOpenChange={setFormOpen}
-        defaultType={defaultType}
-      />
+      <IncomeForm open={incomeOpen} onOpenChange={setIncomeOpen} />
+      <ExpenseForm open={expenseOpen} onOpenChange={setExpenseOpen} />
+      <TransferForm open={transferOpen} onOpenChange={setTransferOpen} />
     </div>
   );
 }
