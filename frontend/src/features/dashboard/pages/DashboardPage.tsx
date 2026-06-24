@@ -5,6 +5,8 @@ import { MonthSelector } from "../components/MonthSelector.tsx";
 import { RevenueExpenseChart } from "../components/RevenueExpenseChart.tsx";
 import { QuickActions } from "../components/QuickActions.tsx";
 import { DashboardSidebar } from "../components/DashboardSidebar.tsx";
+import { DashboardExtrato } from "../components/DashboardExtrato.tsx";
+import { ScopeFilter } from "../components/ScopeFilter.tsx";
 import { IncomeForm } from "#features/transactions/components/IncomeForm.tsx";
 import { ExpenseForm } from "#features/transactions/components/ExpenseForm.tsx";
 import { TransferForm } from "#features/transactions/components/TransferForm.tsx";
@@ -13,6 +15,7 @@ export function DashboardPage() {
   const now = new Date();
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [year, setYear] = useState(now.getFullYear());
+  const [scopeFilter, setScopeFilter] = useState<"all" | "shared" | "individual">("all");
 
   const [incomeOpen, setIncomeOpen] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
@@ -29,7 +32,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <QuickActions
             onAddIncome={() => setIncomeOpen(true)}
@@ -37,7 +40,10 @@ export function DashboardPage() {
             onAddTransfer={() => setTransferOpen(true)}
           />
         </div>
-        <MonthSelector month={month} year={year} onChange={handleMonthChange} />
+        <div className="flex items-center gap-3">
+          <ScopeFilter value={scopeFilter} onChange={setScopeFilter} />
+          <MonthSelector month={month} year={year} onChange={handleMonthChange} />
+        </div>
       </div>
 
       {loadingSummary ? (
@@ -57,6 +63,8 @@ export function DashboardPage() {
           ) : charts ? (
             <RevenueExpenseChart data={charts.monthlyTotals} />
           ) : null}
+
+          <DashboardExtrato scopeFilter={scopeFilter} month={month} year={year} />
         </div>
 
         <DashboardSidebar />
