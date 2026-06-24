@@ -13,6 +13,7 @@ import { AccountsPage } from "#features/accounts/pages/AccountsPage.tsx";
 import { TransactionsPage } from "#features/transactions/pages/TransactionsPage.tsx";
 import { RecurringPage } from "#features/recurring/pages/RecurringPage.tsx";
 import { DashboardPage } from "#features/dashboard/pages/DashboardPage.tsx";
+import { ProfilePage } from "#features/settings/pages/ProfilePage.tsx";
 
 export function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ export function AppRoutes() {
           <Route path="/accounts" element={<AccountsPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/recurring" element={<RecurringPage />} />
+          <Route path="/settings/profile" element={<ProfilePage />} />
         </Route>
       </Route>
 

@@ -47,6 +47,13 @@ export class UsersRepository {
     });
   }
 
+  async updateProfile(userId: string, data: { name?: string; avatarUrl?: string }) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data,
+    });
+  }
+
   async createPasswordResetToken(data: {
     userId: string;
     token: string;
