@@ -60,7 +60,7 @@ export function DashboardExtrato({ scopeFilter, month, year }: DashboardExtratoP
         {isLoading ? (
           <div className="space-y-2">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-12 bg-muted animate-pulse rounded-lg" />
+              <div key={i} className="h-12 skeleton rounded-lg" />
             ))}
           </div>
         ) : transactions.length === 0 ? (

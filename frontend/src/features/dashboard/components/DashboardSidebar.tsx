@@ -88,7 +88,7 @@ export function DashboardSidebar() {
           {loadingTx ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-10 bg-muted animate-pulse rounded-lg" />
+                <div key={i} className="h-10 skeleton rounded-lg" />
               ))}
             </div>
           ) : recentTransactions.length === 0 ? (
@@ -120,7 +120,7 @@ export function DashboardSidebar() {
           {loadingRec ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-12 bg-muted animate-pulse rounded-lg" />
+                <div key={i} className="h-12 skeleton rounded-lg" />
               ))}
             </div>
           ) : activeRecurring.length === 0 ? (
