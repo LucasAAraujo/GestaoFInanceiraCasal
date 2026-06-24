@@ -1,6 +1,7 @@
 import { Card, CardContent } from "#components/ui/card.tsx";
 import { useTransactions } from "#features/transactions/hooks/useTransactions.ts";
 import { useRecurrences } from "#features/recurring/hooks/useRecurring.ts";
+import { InlineManager } from "./InlineManager.tsx";
 import type { RecurringTransaction } from "#features/recurring/services/recurringService.ts";
 
 const STREAMING_ICONS: Record<string, { icon: string; color: string }> = {
@@ -77,6 +78,8 @@ export function DashboardSidebar() {
 
   return (
     <div className="space-y-4">
+      <InlineManager />
+
       <Card>
         <CardContent className="p-4">
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
