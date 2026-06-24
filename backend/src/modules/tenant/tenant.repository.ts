@@ -37,6 +37,10 @@ export class TenantRepository {
     return this.prisma.tenantMember.count({ where: { tenantId } });
   }
 
+  async update(id: string, data: { name?: string }) {
+    return this.prisma.tenant.update({ where: { id }, data });
+  }
+
   async getMembers(tenantId: string) {
     return this.prisma.tenantMember.findMany({
       where: { tenantId },

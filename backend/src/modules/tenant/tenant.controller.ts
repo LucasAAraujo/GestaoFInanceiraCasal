@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 import { TenantService } from './tenant.service.js';
 import { CreateTenantDto } from './dto/create-tenant.dto.js';
+import { UpdateTenantDto } from './dto/update-tenant.dto.js';
 import { InviteMemberDto } from './dto/invite-member.dto.js';
 import { AcceptInviteDto } from './dto/accept-invite.dto.js';
 
@@ -22,6 +23,19 @@ export class TenantController {
   @Get('me')
   async getMyTenant(@CurrentUser() user: { id: string }) {
     return this.tenantService.getMyTenant(user.id);
+  }
+
+  @Patch('me')
+  async updateTenant(
+    @CurrentUser() user: { tenantId: string },
+    @Body() dto: UpdateTenantDto,
+  ) {
+    return this.tenantService.updateTenant(user.tenantId, dto);
+  }
+
+  @Get('me/members')
+  async getMembers(@CurrentUser() user: { tenantId: string }) {
+    return this.tenantService.getMembers(user.tenantId);
   }
 
   @Post('invite')

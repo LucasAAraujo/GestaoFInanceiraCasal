@@ -14,6 +14,7 @@ import { TransactionsPage } from "#features/transactions/pages/TransactionsPage.
 import { RecurringPage } from "#features/recurring/pages/RecurringPage.tsx";
 import { DashboardPage } from "#features/dashboard/pages/DashboardPage.tsx";
 import { ProfilePage } from "#features/settings/pages/ProfilePage.tsx";
+import { WorkspacePage } from "#features/settings/pages/WorkspacePage.tsx";
 
 export function AppRoutes() {
   return (
@@ -35,6 +36,7 @@ export function AppRoutes() {
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/recurring" element={<RecurringPage />} />
           <Route path="/settings/profile" element={<ProfilePage />} />
+          <Route path="/settings/workspace" element={<WorkspacePage />} />
         </Route>
       </Route>
 

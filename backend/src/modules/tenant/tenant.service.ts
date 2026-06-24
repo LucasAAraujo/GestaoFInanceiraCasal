@@ -10,6 +10,7 @@ import { UsersRepository } from '../users/users.repository.js';
 import { CategoriesRepository } from '../categories/categories.repository.js';
 import { MailService } from '../mail/mail.service.js';
 import { CreateTenantDto } from './dto/create-tenant.dto.js';
+import { UpdateTenantDto } from './dto/update-tenant.dto.js';
 import { InviteMemberDto } from './dto/invite-member.dto.js';
 import { DEFAULT_CATEGORIES } from '../../common/constants/default-categories.js';
 
@@ -49,6 +50,15 @@ export class TenantService {
     }
 
     return this.tenantRepository.findById(membership.tenantId);
+  }
+
+  async updateTenant(tenantId: string, dto: UpdateTenantDto) {
+    await this.tenantRepository.update(tenantId, dto);
+    return this.tenantRepository.findById(tenantId);
+  }
+
+  async getMembers(tenantId: string) {
+    return this.tenantRepository.getMembers(tenantId);
   }
 
   async invite(dto: InviteMemberDto, userId: string, tenantId: string) {
