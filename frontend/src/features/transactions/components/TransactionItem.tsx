@@ -8,9 +8,9 @@ interface TransactionItemProps {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  income: "text-green-600",
-  expense: "text-red-600",
-  transfer: "text-blue-600",
+  income: "text-emerald-600",
+  expense: "text-rose-600",
+  transfer: "text-sky-600",
 };
 
 const TYPE_SIGNS: Record<string, string> = {

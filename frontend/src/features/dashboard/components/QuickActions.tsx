@@ -13,21 +13,21 @@ export function QuickActions({ onAddTransaction }: QuickActionsProps) {
         <div className="flex flex-wrap gap-2">
           <Button
             size="sm"
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-emerald-600 hover:bg-emerald-700 shadow-sm"
             onClick={() => onAddTransaction("income")}
           >
             + Receita
           </Button>
           <Button
             size="sm"
-            className="bg-red-600 hover:bg-red-700"
+            className="bg-rose-600 hover:bg-rose-700 shadow-sm"
             onClick={() => onAddTransaction("expense")}
           >
             + Despesa
           </Button>
           <Button
             size="sm"
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-sky-600 hover:bg-sky-700 shadow-sm"
             onClick={() => onAddTransaction("transfer")}
           >
             + Transferência

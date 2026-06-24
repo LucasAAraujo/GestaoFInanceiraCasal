@@ -28,16 +28,26 @@ export function Sidebar() {
   }
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `block px-3 py-2 rounded-md text-sm transition-colors ${
+    `block px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
       isActive
-        ? "bg-primary text-primary-foreground"
-        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+        ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
+        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
     }`;
 
   const content = (
     <>
-      <div className="p-4 border-b border-border">
-        <h2 className="text-lg font-bold text-foreground">Finanças</h2>
+      <div className="p-5 border-b border-sidebar-border">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-sidebar-primary flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="text-sidebar-primary-foreground">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-base font-bold text-sidebar-foreground tracking-tight">Finanças</h2>
+            <p className="text-xs text-sidebar-foreground/50">Gestão do Casal</p>
+          </div>
+        </div>
       </div>
 
       <nav className="flex-1 p-3 space-y-1">
@@ -52,8 +62,8 @@ export function Sidebar() {
           </NavLink>
         ))}
 
-        <div className="pt-4 mt-4 border-t border-border">
-          <p className="px-3 pb-2 text-xs text-muted-foreground uppercase tracking-wider">
+        <div className="pt-4 mt-4 border-t border-sidebar-border">
+          <p className="px-3 pb-2 text-[11px] text-sidebar-foreground/40 uppercase tracking-widest font-semibold">
             Configurações
           </p>
           {SETTINGS_ITEMS.map((item) => (
@@ -69,17 +79,22 @@ export function Sidebar() {
         </div>
       </nav>
 
-      <div className="p-3 border-t border-border">
-        <div className="flex items-center gap-2 px-3 py-2 mb-2">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+      <div className="p-3 border-t border-sidebar-border">
+        <div className="flex items-center gap-2.5 px-3 py-2.5 mb-2 rounded-lg bg-sidebar-accent/50">
+          <div className="w-9 h-9 rounded-full bg-linear-to-br from-sidebar-primary to-sidebar-primary/70 flex items-center justify-center text-sidebar-primary-foreground text-sm font-bold shadow-sm">
             {user?.name?.charAt(0).toUpperCase() ?? "U"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">{user?.name}</p>
-            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+            <p className="text-sm font-semibold text-sidebar-foreground truncate">{user?.name}</p>
+            <p className="text-xs text-sidebar-foreground/50 truncate">{user?.email}</p>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="w-full" onClick={handleLogout}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full border-sidebar-border text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+          onClick={handleLogout}
+        >
           Sair
         </Button>
       </div>

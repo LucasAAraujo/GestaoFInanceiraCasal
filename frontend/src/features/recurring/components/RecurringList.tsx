@@ -58,7 +58,7 @@ export function RecurringList({ items, onEdit }: RecurringListProps) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <p className="font-semibold text-red-600">
+              <p className="font-semibold text-rose-600">
                 {formatCurrency(item.amount)}
               </p>
               <div className="flex gap-1">
