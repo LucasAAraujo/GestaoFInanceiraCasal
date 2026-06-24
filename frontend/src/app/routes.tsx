@@ -12,10 +12,7 @@ import { CategoriesPage } from "#features/categories/pages/CategoriesPage.tsx";
 import { AccountsPage } from "#features/accounts/pages/AccountsPage.tsx";
 import { TransactionsPage } from "#features/transactions/pages/TransactionsPage.tsx";
 import { RecurringPage } from "#features/recurring/pages/RecurringPage.tsx";
-
-function DashboardPage() {
-  return <h1>Dashboard</h1>;
-}
+import { DashboardPage } from "#features/dashboard/pages/DashboardPage.tsx";
 
 export function AppRoutes() {
   return (
